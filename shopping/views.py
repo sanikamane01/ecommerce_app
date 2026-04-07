@@ -2,7 +2,6 @@ from django.shortcuts import render
 from .models import Product
 
 
-
 def create_product(request):
     msg = ""
     
@@ -65,7 +64,13 @@ def create_product(request):
 
 def get_products(request):
     products = Product.objects.all()
-    print(products)
+     
+    # user wants to search products by category
+    if request.method == "POST":
+        category = request.POST.get("category")
+        
+        products = products.filter(category=category)
+        
     return render(request, "get_product.html", {"products": products})  
 
 
@@ -144,8 +149,7 @@ def search_products(request):
 
         category = request.POST.get("category")
 
-        all_products=Product.objects.filter(category=category).filter(category=category)
-        print(len(all_products))
+        all_products=Product.objects.filter(category=category)
 
         if not category:
             msg="category must not be empty"
@@ -154,8 +158,6 @@ def search_products(request):
             msg="product is not available"
 
         
-
-    
     return render(request,"search_products.html",{"products":all_products, "msg":msg}) 
 
 

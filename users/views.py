@@ -76,5 +76,5 @@ def register(request):
         )
             print("register succesfully" )
 
-    return render(request, "register.html", {"msg": msg})
+    return render(request, "users/register.html", {"msg": msg})
 
