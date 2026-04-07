@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+</head>
+<body>
+
+    <h2>Login</h2>
+
+    <h4>{{msg}}</h4>
+    
+    <form method="POST">
+        {% csrf_token %}
+
+        <label>Username:</label><br>
+        <input type="text" name="username" placeholder="Enter Username">
+        <br><br>
+
+        <label>Password:</label><br>
+        <input type="text" name="password" placeholder="Enter Password">
+        <br><br>
+        <button type="submit">Login</button>
+
+    </form>
+
+</body>
+</html>

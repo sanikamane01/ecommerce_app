@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  
+
+  
+    <title>Search Products</title>
+</head>
+<body>
+
+    <h2>Search Products</h2>
+
+     {% for  i in products%}
+
+     <li>{{i.name}},{{i.price}}</li>
+     
+       {% endfor%}
+    <form method="POST">
+
+        {{msg}}
+        {% csrf_token %}
+
+        <label>caterogy:</label><br>
+        
+        <input type="text" name="caterogy" placeholder="caterogy">
+        <br><br>
+        
+        <button type="submit">Search</button>
+    </form>
+
+</body>
+</html>

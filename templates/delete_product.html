@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Product</title>
+</head>
+<body>
+
+<h2>Delete Product</h2>
+
+<form method="POST">
+    {% csrf_token %}
+
+    {{msg}} <br><br>
+
+    <label>Product ID:</label><br>
+    <input type="number" name="product_id"><br><br>
+
+    <button type="submit">Delete Product</button>
+</form>
+
+</body>
+</html>
