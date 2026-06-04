@@ -1,27 +1,73 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Login</title>
+
+    <!-- ✅ Line 6: Bootstrap CSS Added -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.2.1/dist/css/bootstrap.min.css">
+
+    <!-- ✅ Line 9: Custom CSS Added -->
+    <style>
+        body {
+            background: linear-gradient(to right, #667eea, #764ba2);
+            height: 100vh;
+        }
+
+        .login-box {
+            max-width: 400px;
+            margin: auto;
+            margin-top: 80px;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-custom {
+            background-color: #5a189a;
+            color: white;
+        }
+
+        .btn-custom:hover {
+            background-color: #3c096c;
+        }
+    </style>
+
 </head>
+
 <body>
 
-    <h2>Login</h2>
+    <!-- ✅ Line 28: Wrapper div added -->
+    <div class="login-box">
 
-    <h4>{{msg}}</h4>
-    
-    <form method="POST">
-        {% csrf_token %}
+        <h2 class="text-center mb-4">Login</h2>
 
-        <label>Username:</label><br>
-        <input type="text" name="username" placeholder="Enter Username">
-        <br><br>
+        <!-- ✅ Line 32: Styled message -->
+        <h5 class="text-danger text-center">{{msg}}</h5>
 
-        <label>Password:</label><br>
-        <input type="text" name="password" placeholder="Enter Password">
-        <br><br>
-        <button type="submit">Login</button>
+        <!-- ✅ Line 35: Bootstrap form class -->
+        <form method="POST">
+            {% csrf_token %}
 
-    </form>
+            <div class="form-group">
+                <label>Username:</label>
+                <!-- ✅ Line 41: Bootstrap input -->
+                <input type="text" class="form-control" name="username" placeholder="Enter Username" required>
+            </div>
+
+            <div class="form-group">
+                <label>Password:</label>
+                <!-- ✅ Line 47: Password + Bootstrap -->
+                <input type="password" class="form-control" name="password" placeholder="Enter Password" required>
+            </div>
+
+            <!-- ✅ Line 51: Styled button -->
+            <button type="submit" class="btn btn-custom btn-block">Login</button>
+
+        </form>
+
+    </div>
 
 </body>
 </html>

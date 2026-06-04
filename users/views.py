@@ -1,18 +1,17 @@
-from django.shortcuts import render
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
 
 
-def login(request):
+def userlogin(request):
     msg = ""
     
     if request.method == "POST":
         username = request.POST.get("username")
         password = request.POST.get("password")
-        
+
         # 1. check username is present in db
         if User.objects.filter(username = username).exists():
             
@@ -20,8 +19,9 @@ def login(request):
             user = authenticate(request, username=username, password=password)
             # 3. if password/username is correct
             if user:
-                # login(user)
+                login(request, user)
                 msg = "Login Success"
+                return redirect("/get-products")
             else:
                 msg = "Invalid Username/Password" 
         else:
@@ -38,11 +38,12 @@ def register(request):
         username = request.POST.get("username")
         password = request.POST.get("password")
         email = request.POST.get("email")
-        all_existingregister= User.objects.filter(username=username)
     
+    
+    
+        if User.objects.filter(username = username).exists():
+            msg="username already exists"
 
-        if len(all_existingregister) > 0 :
-            msg="username already exists",username
 
         if not username :
             msg="username must not be empty"
@@ -59,16 +60,11 @@ def register(request):
         if not email :
             msg="email must not be empty"
 
-    
-
-        
-        
-       
         else :
 
             User.objects.create(
-            firstname = firstname,
-            lastname = lastname,
+            first_name = firstname,
+            last_name = lastname,
             username = username,
             password = password,
             email = email,

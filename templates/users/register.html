@@ -1,37 +1,94 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Register</title>
+
+    <!-- ✅ Line 6: Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.2.1/dist/css/bootstrap.min.css">
+
+    <!-- ✅ Line 9: Custom CSS -->
+    <style>
+        body {
+            background: linear-gradient(to right, #ff9a9e, #fad0c4);
+            height: 100vh;
+        }
+
+        .register-box {
+            max-width: 450px;
+            margin: auto;
+            margin-top: 60px;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-custom {
+            background-color: #ff6f61;
+            color: white;
+        }
+
+        .btn-custom:hover {
+            background-color: #e85d50;
+        }
+    </style>
+
 </head>
+
 <body>
 
-<h2>Register Page</h2>
+    <!-- ✅ Line 28: Main container -->
+    <div class="register-box">
 
-<form method="POST">
-    {% csrf_token %}
+        <h2 class="text-center mb-4">Register Page</h2>
 
-    <label>First Name:</label><br>
-    <input type="text" name="firstname"><br><br>
+        <form method="POST">
+            {% csrf_token %}
 
-    <label>Last Name:</label><br>
-    <input type="text" name="lastname"><br><br>
+            <div class="form-group">
+                <label>First Name:</label>
+                <!-- ✅ Line 37 -->
+                <input type="text" class="form-control" name="firstname" required>
+            </div>
 
-    <label>Username:</label><br>
-    <input type="text" name="username"><br><br>
+            <div class="form-group">
+                <label>Last Name:</label>
+                <!-- ✅ Line 43 -->
+                <input type="text" class="form-control" name="lastname" required>
+            </div>
 
-    <label>Email:</label><br>
-    <input type="email" name="email"><br><br>
+            <div class="form-group">
+                <label>Username:</label>
+                <!-- ✅ Line 49 -->
+                <input type="text" class="form-control" name="username" required>
+            </div>
 
-    <label>Password:</label><br>
-    <input type="password" name="password"><br><br>
+            <div class="form-group">
+                <label>Email:</label>
+                <!-- ✅ Line 55 -->
+                <input type="email" class="form-control" name="email" required>
+            </div>
 
-    <button type="submit">Register</button>
-</form>
+            <div class="form-group">
+                <label>Password:</label>
+                <!-- ✅ Line 61 -->
+                <input type="password" class="form-control" name="password" required>
+            </div>
 
-<br>
-<p style="color:red;">{{ msg }}</p>
+            <!-- ✅ Line 65 -->
+            <button type="submit" class="btn btn-custom btn-block">Register</button>
+        </form>
 
-<a href="/login/">Already have account? Login</a>
+        <!-- ✅ Line 69 -->
+        <p class="text-danger text-center mt-3">{{ msg }}</p>
+
+        <!-- ✅ Line 72 -->
+        <div class="text-center">
+            <a href="/login/">Already have account? Login</a>
+        </div>
+
+    </div>
 
 </body>
 </html>

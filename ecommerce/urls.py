@@ -15,9 +15,11 @@ urlpatterns = [
     path('update-product/',views.update_product,name='update_product'),
     path('delete-product/',views.delete_product,name='delete_product'),
     path('search-products/',views.search_products,name='search_products'),
+    path("add-to-cart/", views.add_to_cart, name='add_to_cart'),
+    path("my-cart/", views.my_cart_items, name='my-cart'),
 
     # user urls
-    path('login/', user_views.login, name='login'),
+    path('login/', user_views.userlogin, name='login'),
     path('register/', user_views.register, name='register'),
 ]
 
