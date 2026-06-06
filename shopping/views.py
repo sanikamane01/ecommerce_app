@@ -17,7 +17,7 @@ def create_product(request):
         category = request.POST.get("category")
         image = request.FILES.get("image")
         
-        print(in_stock)
+        
         if in_stock is None :
             stock_status=False
 
@@ -78,8 +78,8 @@ def get_products(request):
     if request.method == "POST":
         
         # search
-        if request.POST.get("category"):
-            category = request.POST.get("category")
+        if request.POST.get("search"):
+            category = request.POST.get("search")
             products = Product.objects.filter(category=category)
 
         # add to cart
@@ -219,53 +219,27 @@ def my_cart_items(request):
 
 
 
-
-def product_list(request):
-
+def filter_by_category(request):
+    
     products = Product.objects.all()
+    
+    if request.method == "POST":
+        
+        if request.POST.get("category"):
+            category = request.POST.get("category")
+            products = Product.objects.filter(category=category)
+            
+        
+        if request.POST.get("brand"):    
+            brand = request.POST.get("brand")
+            products = Product.objects.filter(brand=brand)
+        
+        # add filters 1. name, 2. in stock
+        
+            
+            
+    return render(request,"filter_by_category.html", {"products": products})
 
-    # Search
-    search = request.GET.get('search')
-    if search:
-        products = products.filter(name__icontains=search)
-
-    # Category Filter
-    category = request.GET.get('category')
-    if category:
-        products = products.filter(category=category)
-
-    # Brand Filter
-    brand = request.GET.get('brand')
-    if brand:
-        products = products.filter(brand=brand)
-
-    # Stock Filter
-    stock = request.GET.get('stock')
-    if stock == 'in':
-        products = products.filter(in_stock=True)
-
-    elif stock == 'out':
-        products = products.filter(in_stock=False)
-
-    # Sorting
-    sort = request.GET.get('sort')
-
-    if sort == 'low_price':
-        products = products.order_by('price')
-
-    elif sort == 'high_price':
-        products = products.order_by('-price')
-
-    elif sort == 'newest':
-        products = products.order_by('-created_at')
-
-    elif sort == 'oldest':
-        products = products.order_by('created_at')
-
-    context = {
-        'products': products
-    }
-
-    return render(request, 'product_list.html', context)
+        
 
     
