@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Cart</title>
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@4.2.1/dist/css/bootstrap.min.css">
+</head>
+
+<body style="background-color:gray;">
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Sanu's Store</a>
+
+    </nav>
+
+    <div class="container mt-5">
+
+        <h2 class="text-center text-white mb-4">My Cart</h2>
+
+        <div class="row">
+
+            {% for i in products %}
+
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+
+                    <img src="/media/{{i.image}}"
+                         class="card-img-top"
+                         style="height:200px; object-fit:cover;">
+
+                    <div class="card-body">
+
+                        <h5 class="card-title">{{i.name}}</h5>
+
+                        <p class="card-text">
+                            {{i.description}}
+                        </p>
+
+                        <h6 class="text-success">
+                            ₹{{i.price}}
+                        </h6>
+
+                        <button class="btn btn-danger">
+                            Remove From Cart
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+
+            {% empty %}
+
+            <div class="col-12 text-center">
+                <h3 class="text-white">Your Cart is Empty 🛒</h3>
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</body>
+</html>

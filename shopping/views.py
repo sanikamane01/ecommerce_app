@@ -188,15 +188,84 @@ def search_products(request):
 
 def my_cart_items(request):
     my_userid = request.user.id
+    product_id=request.product.id
 
     carts = Cart.objects.filter(user_id = my_userid)
     print(carts)
-    
+    if Product.objects.filter(id=product_id):
+        print(product_id)
+
 
 def add_to_cart(request):
     
     return render(request, "get_product.html")
 
+
+def my_cart_items(request):
     
+    # get user id from request
+    my_userid = request.user.id
+    
+    # Get number of carts for the user
+    carts = Cart.objects.filter(user_id = my_userid)
+    
+    # get product ids from carts
+    product_ids = carts.values_list('product_id', flat=True) #[1,2,4,56,67]
+    
+    # get products from product ids
+    products = Product.objects.filter(id__in = product_ids)
+    return render(request, "my_cart.html", {"products":products})  
+
+
+
+
+
+def product_list(request):
+
+    products = Product.objects.all()
+
+    # Search
+    search = request.GET.get('search')
+    if search:
+        products = products.filter(name__icontains=search)
+
+    # Category Filter
+    category = request.GET.get('category')
+    if category:
+        products = products.filter(category=category)
+
+    # Brand Filter
+    brand = request.GET.get('brand')
+    if brand:
+        products = products.filter(brand=brand)
+
+    # Stock Filter
+    stock = request.GET.get('stock')
+    if stock == 'in':
+        products = products.filter(in_stock=True)
+
+    elif stock == 'out':
+        products = products.filter(in_stock=False)
+
+    # Sorting
+    sort = request.GET.get('sort')
+
+    if sort == 'low_price':
+        products = products.order_by('price')
+
+    elif sort == 'high_price':
+        products = products.order_by('-price')
+
+    elif sort == 'newest':
+        products = products.order_by('-created_at')
+
+    elif sort == 'oldest':
+        products = products.order_by('created_at')
+
+    context = {
+        'products': products
+    }
+
+    return render(request, 'product_list.html', context)
 
     
