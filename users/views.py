@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
+from users.models import UserProfile
 
 
 def userlogin(request):
@@ -74,3 +75,46 @@ def register(request):
 
     return render(request, "users/register.html", {"msg": msg})
 
+
+def create_profile(request):
+    error = ""
+    success = ""
+
+    if request.method == "POST":
+        
+        mobile = request.POST.get("mobile")
+        address = request.POST.get("address")
+        city = request.POST.get("city")
+        state = request.POST.get("state")
+        country = request.POST.get("country")
+        pincode = request.POST.get("pincode")
+        gender = request.POST.get("gender")
+        image = request.FILES.get("image")
+
+        if UserProfile.objects.filter(user=request.user).exists():
+            error = "Profile already exists"
+
+        else:
+
+            UserProfile.objects.create(
+                user=request.user,
+                mobile=mobile,
+                address=address,
+                city=city,
+                state=state,
+                country=country,
+                pincode=pincode,
+                gender=gender.lower(),
+                image=image
+            )
+
+            success = "Profile created successfully"
+
+    return render(
+        request,
+        "users/create_profile.html",
+        {
+            "error": error,
+            "success": success
+        }
+    )

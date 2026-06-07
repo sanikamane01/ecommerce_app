@@ -28,6 +28,7 @@ urlpatterns = [
     # user urls
     path('login/', user_views.userlogin, name='login'),
     path('register/', user_views.register, name='register'),
+    path('create-profile/', user_views.create_profile, name='create_profle'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
