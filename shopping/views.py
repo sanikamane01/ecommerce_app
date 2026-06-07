@@ -201,42 +201,65 @@ def add_to_cart(request):
     return render(request, "get_product.html")
 
 
+
 def my_cart_items(request):
-    
+
     # get user id from request
     my_userid = request.user.id
-    
+
     # Get number of carts for the user
-    carts = Cart.objects.filter(user_id = my_userid)
-    
+    carts = Cart.objects.filter(user_id=my_userid)
+
     # get product ids from carts
-    product_ids = carts.values_list('product_id', flat=True) #[1,2,4,56,67]
-    
+    product_ids = carts.values_list('product_id', flat=True)
+
     # get products from product ids
-    products = Product.objects.filter(id__in = product_ids)
-    return render(request, "my_cart.html", {"products":products})  
+    products = Product.objects.filter(id__in=product_ids)
+
+    return render(request, "my_cart.html", {"products": products})
+
+
+def remove_from_cart(request, product_id):
+
+    my_userid = request.user.id
+
+    Cart.objects.filter(
+        user_id=my_userid,
+        product_id=product_id
+    ).delete()
+
+    return render(request,"my-cart", {"products":Product})
 
 
 
 
 def filter_by_category(request):
-    
+
     products = Product.objects.all()
-    
+
     if request.method == "POST":
-        
-        if request.POST.get("category"):
-            category = request.POST.get("category")
-            products = Product.objects.filter(category=category)
-            
-        
-        if request.POST.get("brand"):    
-            brand = request.POST.get("brand")
-            products = Product.objects.filter(brand=brand)
-        
-        # add filters 1. name, 2. in stock
-        
-            
+
+        category = request.POST.get("category")
+        brand = request.POST.get("brand")
+        name = request.POST.get("name")
+        price = request.POST.get("price")
+        stock = request.POST.get("stock")
+
+        if category:
+            products = products.filter(category=category)
+
+        if brand:
+            products = products.filter(brand=brand)
+
+        if name:
+            products = products.filter(name__icontains=name)
+
+        if price:
+            products = products.filter(price=price)
+
+        if stock:
+            products = products.filter(in_stock=True)
+
             
     return render(request,"filter_by_category.html", {"products": products})
 

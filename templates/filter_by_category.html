@@ -53,11 +53,14 @@
             {%csrf_token%}
             <input class="form-control me-2" type="category_filter" placeholder="Category" name="category"/>
             <input class="form-control me-2" type="brand_filter" placeholder="Brand" name="brand"/>
+            <input class="form-control me-2" type="in-stock_filter" placeholder="in-stock" name="in-stock"/>
+            <input class="form-control me-2" type="name_filter" placeholder="name" name="name"/>
+            <input class="form-control me-2" type="price_filter" placeholder="price" name="price"/>
             <input class="form-control me-2" type="checkbox" name="stock" placeholder="In Stock"><br><br>
             <button class="btn btn-danger" type="submit">Filter</button>
           </form>
 
-
+        
 
       <div class="row">
         {% for i in products %}
