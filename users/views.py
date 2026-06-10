@@ -1,6 +1,5 @@
 
 from django.shortcuts import render, redirect
-
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from users.models import UserProfile
@@ -22,7 +21,7 @@ def userlogin(request):
             if user:
                 login(request, user)
                 msg = "Login Success"
-                return redirect("/get-products")
+                return redirect("/")
             else:
                 msg = "Invalid Username/Password" 
         else:

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Product, Cart
 
 
@@ -79,10 +79,10 @@ def get_products(request):
         
         # search
         if request.POST.get("search"):
-            category = request.POST.get("search")
-            products = Product.objects.filter(category=category)
-
-        # add to cart
+            searched_keyword = request.POST.get("search", "")
+            
+            products = Product.objects.filter(category__icontains=searched_keyword) or Product.objects.filter(name__icontains=searched_keyword) or Product.objects.filter(brand__icontains=searched_keyword)
+            
         if request.POST.get("product_id"):
             
             # check if user is logged in
@@ -186,16 +186,6 @@ def search_products(request):
     return render(request,"search_products.html",{"products":all_products, "msg":msg})
 
 
-def my_cart_items(request):
-    my_userid = request.user.id
-    product_id=request.product.id
-
-    carts = Cart.objects.filter(user_id = my_userid)
-    print(carts)
-    if Product.objects.filter(id=product_id):
-        print(product_id)
-
-
 def add_to_cart(request):
     
     return render(request, "get_product.html")
@@ -227,8 +217,7 @@ def remove_from_cart(request, product_id):
         user_id=my_userid,
         product_id=product_id
     ).delete()
-
-    return render(request,"my-cart", {"products":Product})
+    return redirect("/my-cart")
 
 
 

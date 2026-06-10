@@ -8,10 +8,10 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
-    
+    path("", views.get_products, name='home'),
     path('admin/', admin.site.urls),
     path('create-product/', views.create_product, name='create_product'),
-    path('get-products/', views.get_products,name='get_products'),
+    path('products/', views.get_products,name='get_products'),
     path('update-product/',views.update_product,name='update_product'),
     path('delete-product/',views.delete_product,name='delete_product'),
     path('search-products/',views.search_products,name='search_products'),
